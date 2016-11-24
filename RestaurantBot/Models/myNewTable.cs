@@ -25,8 +25,8 @@ namespace RestaurantBot.Models
         [JsonProperty(PropertyName = "username")]
         public string username { get; set; }
 
-        [JsonProperty(PropertyName = "password")]
-        public string password { get; set; }
+        [JsonProperty(PropertyName = "restaurantName")]
+        public string restaurantName { get; set; }
 
     }
 }
