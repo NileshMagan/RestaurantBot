@@ -54,7 +54,7 @@ namespace RestaurantBot
                 }
                 else if ((loggedIn == true) && (verified == false))
                 {
-                    endOutput = "Thank you! ask me something about restaurants now ";
+                    endOutput = "Thank you! ask me about an area and I will tell you some restaurants there";
                     userData.SetProperty<bool>("verified", true);
                     await stateClient.BotState.SetUserDataAsync(activity.ChannelId, activity.From.Id, userData);
 
@@ -169,7 +169,7 @@ namespace RestaurantBot
                             endOutput = homeCity;
                             notFood = true;
                         }
-                        else if (userMessage.ToLower().Equals("get table"))
+                        else if (userMessage.ToLower().Equals("get history"))
                         {
                             List<myNewTable> fromServer = await AzureManager.AzureManagerInstance.GetMyTables();
                             endOutput = "";
@@ -303,7 +303,7 @@ namespace RestaurantBot
                         string z = await GeoClient.GetStringAsync(new Uri("https://developers.zomato.com/api/v2.1/geocode?lat=" + rootObject2.results[0].geometry.location.lat + "&lon=" + rootObject2.results[0].geometry.location.lng));
                         rootObject3 = JsonConvert.DeserializeObject<GeoObject.RootObject>(z);
 
-                        reply = activity.CreateReply($"RESTAURANTS NEAR YOU:");
+                        reply = activity.CreateReply($"Restaurants near you:");
                         await connector.Conversations.ReplyToActivityAsync(reply);
 
                         Activity finalReply = activity.CreateReply($"Restaurants");
