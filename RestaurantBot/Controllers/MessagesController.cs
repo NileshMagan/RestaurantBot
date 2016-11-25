@@ -306,10 +306,15 @@ namespace RestaurantBot
                         reply = activity.CreateReply($"RESTAURANTS NEAR YOU:");
                         await connector.Conversations.ReplyToActivityAsync(reply);
 
+                        Activity finalReply = activity.CreateReply($"Restaurants");
+                        finalReply.Type = "message";
+                        finalReply.AttachmentLayout = "carousel";
+                        finalReply.Attachments = new List<Attachment>();
+
                         for (int i = 0; i < rootObject3.popularity.nearby_res.Count; i++)
                         {
                             //Was here to output res id's
-                            reply = activity.CreateReply($"{rootObject3.popularity.nearby_res[i]}");
+                           // reply = activity.CreateReply($"{rootObject3.popularity.nearby_res[i]}");
 
 
                             //RES_ID to Retaurants
@@ -324,15 +329,26 @@ namespace RestaurantBot
 
 
 
+
+
+
+
+                            finalReply.Recipient = activity.From;
+                            
+
+
+
+
                             //await connector.Conversations.ReplyToActivityAsync(reply);
 
 
                             //Cards
 
                             //Activity replyToConversation = activity.CreateReply("MSA information");
-                            reply.Recipient = activity.From;
-                            reply.Type = "message";
-                            reply.Attachments = new List<Attachment>();
+                           // reply.Recipient = activity.From;
+                            //reply.Type = "message";
+                            //reply.AttachmentLayout = "carousel";
+                            //reply.Attachments = new List<Attachment>();
                             List<CardImage> cardImages = new List<CardImage>();
                             cardImages.Add(new CardImage(url: rootObject4.featured_image));
                             List<CardAction> cardButtons = new List<CardAction>();
@@ -367,13 +383,16 @@ namespace RestaurantBot
                                 Buttons = cardButtons
                             };
                             Attachment plAttachment = plCard.ToAttachment();
-                            reply.Attachments.Add(plAttachment);
-                            await connector.Conversations.SendToConversationAsync(reply);
+                            finalReply.Attachments.Add(plAttachment);
+                            //reply.Attachments.Add(plAttachment);
+                            //reply.Attachments.Add(plAttachment);
+                            //await connector.Conversations.SendToConversationAsync(reply);
 
                             //return Request.CreateResponse(HttpStatusCode.OK);
 
                         }
-
+                       //ADDED
+                        await connector.Conversations.SendToConversationAsync(finalReply);
                     }
 
                 }
