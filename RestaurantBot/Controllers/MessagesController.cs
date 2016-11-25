@@ -213,7 +213,7 @@ namespace RestaurantBot
                             int pos = 0;
                             string[] deleteArray = new string[newLength];
                             for (int q = 0; q < (i); q++)
-                            {
+                            {  
                                 if (ListID[q] != null)
                                 {
                                     deleteArray[pos] = ListID[q];
